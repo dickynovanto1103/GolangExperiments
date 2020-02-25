@@ -1,0 +1,1 @@
+In golang, we can implement an interface from the other package
