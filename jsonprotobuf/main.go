@@ -19,6 +19,7 @@ func main() {
 	err = json.Unmarshal(file, &data)
 	if err != nil {
 		log.Println("error unmarshal data, err: ", err)
+		return
 	}
 	log.Println("data: ", data)
 
@@ -27,7 +28,17 @@ func main() {
 	err = jsonpb.Unmarshal(bytes.NewBuffer(file), studentPb)
 	if err != nil {
 		log.Println("error unmarshall studentpb, err:", err)
+		return
 	}
 
 	log.Printf("studentPb: %v\n", studentPb)
+	marshaller := &jsonpb.Marshaler{}
+	newBuffer := bytes.NewBuffer([]byte{})
+	err = marshaller.Marshal(newBuffer, studentPb)
+	if err != nil {
+		log.Println("Err: ", err)
+		return
+	}
+	ans := newBuffer.Bytes()
+	log.Println("ans: ", string(ans))
 }
