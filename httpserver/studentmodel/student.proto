@@ -1,0 +1,12 @@
+syntax="proto2";
+package student;
+
+message Student {
+    optional int32 id = 1;
+    optional string name = 2;
+    optional IDCard idCard = 3;
+}
+
+message IDCard {
+    optional int32 id = 1;
+}
