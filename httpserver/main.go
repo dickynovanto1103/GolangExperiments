@@ -8,17 +8,23 @@ import (
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	if err := r.ParseForm(); err != nil {
-		log.Panicf("error in parsing form, err: %v", err)
+	switch r.Method{
+	case "GET":
+		w.Write([]byte("hello"))
+	case "POST":
+		decoder := json.NewDecoder(r.Body)
+		student := &student.Student{}
+		if err := decoder.Decode(&student); err != nil {
+			log.Panicf("error decoding student, err: %v", err)
+		}
+		log.Printf("r: %v body: %v form: %v", r, r.Body, r.Form)
+		log.Println("student: ", student)
+
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("POST request successful, student: " + student.String()))
+	default:
+		w.WriteHeader(http.StatusMethodNotAllowed)
 	}
-	decoder := json.NewDecoder(r.Body)
-	student := &student.Student{}
-	if err := decoder.Decode(&student); err != nil {
-		log.Panicf("error decoding student, err: %v", err)
-	}
-	log.Printf("r: %v body: %v form: %v", r, r.Body, r.Form)
-	log.Println("student: ", student)
-	w.Write([]byte("hello"))
 }
 
 func main() {
