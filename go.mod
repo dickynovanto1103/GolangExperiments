@@ -15,4 +15,5 @@ require (
 	golang.org/x/net v0.0.0-20191027093000-83d349e8ac1a // indirect
 	golang.org/x/sys v0.0.0-20190801041406-cbf593c0f2f3 // indirect
 	google.golang.org/protobuf v1.21.0
+	unit.nginx.org v0.0.0-20200424040856-195fe0a92670
 )
