@@ -10,6 +10,7 @@ require (
 	github.com/cucumber/messages-go/v10 v10.0.3
 	github.com/gogo/protobuf v1.3.1
 	github.com/golang/protobuf v1.4.0-rc.4.0.20200313231945-b860323f09d0
+	github.com/google/btree v1.0.0
 	github.com/hashicorp/golang-lru v0.5.3 // indirect
 	github.com/robfig/cron v1.2.0
 	golang.org/x/net v0.0.0-20191027093000-83d349e8ac1a // indirect
