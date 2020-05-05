@@ -10,7 +10,7 @@ import (
 func Iterator(item btree.Item) bool {
 	student := item.(*model.Student)
 	fmt.Println("student: ", student)
-	return student.Id < 4
+	return true
 }
 
 func main() {
@@ -19,6 +19,10 @@ func main() {
 	tree.ReplaceOrInsert(model.NewStudent(4, "andre"))
 	tree.ReplaceOrInsert(model.NewStudent(3, "andre"))
 
+	itemSmallest := model.NewStudent(1, "andre")
+	itemBiggest := model.NewStudent(4, "dicky")
+	fmt.Println("ascend range")
+	tree.AscendRange(itemSmallest, itemBiggest, Iterator)
 
 	log.Println("tree len: ", tree.Len())
 	log.Println("tree: ", *tree)
