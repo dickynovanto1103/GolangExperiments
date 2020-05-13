@@ -83,7 +83,7 @@ func SerialAdd() {
 	log.Println("bil final: ", bil)
 	log.Println("time elapsed: ", time.Since(now))
 }
-var n = 10000000
+var n = 900000000
 
 var arr1 = make([]int, n)
 var arr2 = make([]int, n)
@@ -92,7 +92,7 @@ var sum = make([]int, n)
 func SumParallel(n int) {
 	now := time.Now()
 	threads := runtime.GOMAXPROCS(0)
-	ch := make(chan int, threads)
+	ch := make(chan int)
 	//wg := sync.WaitGroup{}
 	//wg.Add(threads)
 	for i:=0;i<threads;i++ {
