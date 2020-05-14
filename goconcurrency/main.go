@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 	"runtime"
 	"time"
 )
@@ -129,16 +130,36 @@ func gen(n int) {
 		arr1[i] = i
 		arr2[i] = i
 	}
+}
 
+func say(s string) {
+	for i:=0;i<5;i++ {
+		runtime.Gosched()
+		fmt.Println(s)
+	}
+}
+
+func GoShed() {
+	runtime.GOMAXPROCS(0)
+	val := os.Getenv("GOMAXPROCS")
+	log.Println("GOMAXPROCS: ", val)
+	go say("hello")
+	say("world")
+	//fmt.Println("hello")
 }
 
 func main() {
 	//exp1()
 	//exp2()
-	gen(n)
-	log.Println("done")
-	SumSerial(n)
-	SumParallel(n)
+
+	//gen(n)
+	//log.Println("done")
+	//SumSerial(n)
+	//SumParallel(n)
+
 	//CanWeDoParallelOperation()
 	//SerialAdd()
+
+	GoShed()
+	//testSleep()
 }
