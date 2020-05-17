@@ -84,7 +84,7 @@ func SerialAdd() {
 	log.Println("bil final: ", bil)
 	log.Println("time elapsed: ", time.Since(now))
 }
-var n = 900000000
+var n = 100000000
 
 var arr1 = make([]int, n)
 var arr2 = make([]int, n)
@@ -152,13 +152,13 @@ func main() {
 	//exp1()
 	//exp2()
 
-	//gen(n)
-	//log.Println("done")
-	//SumSerial(n)
-	//SumParallel(n)
+	gen(n)
+	log.Println("done")
+	SumSerial(n)
+	SumParallel(n)
 
 	//CanWeDoParallelOperation()
 	//SerialAdd()
 
-	GoShed()
+	//GoShed()
 }
