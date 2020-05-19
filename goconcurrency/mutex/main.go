@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"runtime"
 	"sync"
 )
@@ -37,7 +36,15 @@ func Pattern1Mutex() {
 	}
 }
 
+func Pattern2Mutex() {
+	for i:=0;i<2;i++ {
+		str.Lock()
+	}
+}
+
 func main() {
-	Pattern1Mutex()
-	log.Printf("final bil: %v", str.bil)
+	//Pattern1Mutex()
+	//log.Printf("final bil: %v", str.bil)
+
+	Pattern2Mutex()
 }
