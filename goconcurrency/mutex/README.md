@@ -7,5 +7,8 @@
 3. If we lock 2 times, then it will cause deadlock --> locking 2 times
 4. If we lock 1 times and no unlocking happens, the deadlock will not happen
 5. We can use RWMutex if the case is that we want to do read and write operation.
-    1. Why can't we use the usual Mutex for this case? because in order to get the correct value when we read, we need to do locking first. In some cases, the read operation can require more than 1 times locking. Therefore we can use RLock() 
+    1. Why can't we use the usual Mutex for this case? because in order to get the correct value when we read, we need to do locking first. In some cases, the read operation can require more than 1 times locking. Therefore we can use RLock()
+    2. Benefit of using RWMutex is that using this RWMutex:
+        1. We are guaranteed that the shared state will not be mutated when any RLock is still there --> No Lock (Write Lock) will happen when RLock is still acquired
+        2. Multiple read action by goroutine can access the critical section at the same time --> higher throughput
     
