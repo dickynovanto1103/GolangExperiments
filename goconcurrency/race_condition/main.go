@@ -24,6 +24,20 @@ func exp1() {
 	}
 }
 
+func raceOnLoopCounter() {
+	ch := make(chan int)
+	for i:=0;i<5;i++ {
+		go func(j int) {
+			fmt.Printf("%v", j)
+			ch <- 1
+		}(i)
+	}
+	for i:=0;i<5;i++ {
+		<-ch
+	}
+}
+
 func main() {
-	exp1()
+	//exp1()
+	raceOnLoopCounter()
 }
