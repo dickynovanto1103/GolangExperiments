@@ -1,0 +1,2 @@
+# Profiling note
+1. A little bit off topic to profiling. I learnt that putting os.Signal channel means that when it receive stop signal (ctrl + c), it will fill the done channel and then it will shutdown the server
