@@ -1,2 +1,3 @@
 # Profiling note
 1. A little bit off topic to profiling. I learnt that putting os.Signal channel means that when it receive stop signal (ctrl + c), it will fill the done channel and then it will shutdown the server
+2. For CPU profiling, we can create CPU profiling file, then we do `pprof.StartCPUProfile(file)`. After we finish running our web server, we can run `go tool pprof <cpu profile file path>`, then we can enter `top 10` to get top 10 longest bottleneck

@@ -5,8 +5,10 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	_ "net/http/pprof"
 	"os"
 	"os/signal"
+	"runtime/pprof"
 	"syscall"
 	"time"
 )
@@ -25,12 +27,25 @@ func main() {
 	done := make(chan os.Signal, 1)
 	signal.Notify(done, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
 
+	var err error
+	//add profiling here
+	file, err := os.Create("profiling/cpu.prof")
+	if err != nil {
+		log.Fatal("err creating file: ", err)
+	}
+
+	err = pprof.StartCPUProfile(file)
+	if err != nil {
+		log.Fatal("err startCPUprofile: ", err)
+	}
+	defer pprof.StopCPUProfile()
+
 	go func() {
 		server.ListenAndServe()
 	}()
 	<-done
 	log.Println("do shutdown")
-	err := server.Shutdown(context.Background())
+	err = server.Shutdown(context.Background())
 	if err != nil {
 		log.Println("error shutting down: ", err)
 	}
