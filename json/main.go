@@ -10,6 +10,16 @@ type Student struct {
 	Name string
 }
 
+
+type TestStruct struct {
+	Mapper map[string]int `json:"testmap"`
+}
+
+func createJSONString(ob interface{}) string {
+	b, _ := json.Marshal(ob)
+	return string(b)
+}
+
 //if we don't set the name of the fields in json format, for example, Id int `json:"id"`, then the fields will just become the original fields name
 func main() {
 	student := &Student{}
@@ -22,4 +32,14 @@ func main() {
 		return
 	}
 	log.Println("byteArr: ", string(byteArr))
+
+	testStruct := &TestStruct{
+		Mapper: make(map[string]int),
+	}
+	testStruct.Mapper["json"] = 1
+	b, _ := json.Marshal(testStruct)
+	log.Println("hasil marshall: ", string(b))
+
+	ans := createJSONString(testStruct)
+	log.Println("string: ", ans)
 }
