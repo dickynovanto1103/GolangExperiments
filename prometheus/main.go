@@ -11,7 +11,7 @@ import (
 func recordMetric() {
 	for {
 		counterOps.Inc()
-		time.Sleep(1*time.Microsecond)
+		time.Sleep(1*time.Second)
 	}
 }
 
@@ -33,18 +33,33 @@ var(
 		Namespace:   "try_prometheus",
 		Name:        "histogram",
 		Help:        "just histogram",
-		Buckets:     []float64{0.1, 0.2, 1},
+		Buckets:     prometheus.DefBuckets,
 	}, []string{"code"})
+
+	httpCounterOps = promauto.NewCounter(prometheus.CounterOpts{
+		Namespace: "test",
+		Name: "http",
+	})
 )
+
+func StartPrometheusHandler() {
+	go func() {
+		http.Handle("/metrics", promhttp.Handler())
+		http.ListenAndServe(":2112", nil)
+	}()
+}
+
+func handler(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("hello world"))
+	httpCounterOps.Inc()
+}
 
 func main() {
 	//prometheus.CounterOpts{
 	//	Name: "counter",
 	//	Help: "just metric for gettinc ounter",
 	//}
-	go recordMetric()
-	go recordHistogramMetric()
-
-	http.Handle("/metrics", promhttp.Handler())
-	http.ListenAndServe(":2112", nil)
+	StartPrometheusHandler()
+	http.HandleFunc("/test", handler)
+	http.ListenAndServe(":8080", nil)
 }
