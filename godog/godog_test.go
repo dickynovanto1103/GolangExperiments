@@ -5,17 +5,20 @@ import (
 	"github.com/cucumber/godog"
 	"github.com/cucumber/godog/colors"
 	"github.com/cucumber/messages-go/v10"
+	"log"
 	"os"
 	"testing"
 )
 
 func thereAreGodogs(available int) error {
 	godogs = available
+	fmt.Println("godogs: ", godogs)
 	return nil
 }
 
 func iEat(arg1 int) error {
 	godogs -= arg1
+	log.Println("iEat, arg1:", arg1)
 	return nil
 }
 

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"log"
 )
@@ -42,4 +43,8 @@ func main() {
 
 	ans := createJSONString(testStruct)
 	log.Println("string: ", ans)
+
+	name := "dicky"
+	err = json.NewEncoder(bytes.NewBuffer([]byte(name))).Encode(struct{}{})
+	log.Println("err encode: ", err)
 }
