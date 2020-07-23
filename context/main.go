@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"time"
 )
@@ -24,6 +25,41 @@ func runWithContext(ctx context.Context, sleepDur time.Duration) {
 	}
 }
 
+func testContext(ctx context.Context, cancelFunc context.CancelFunc) {
+	done := make(chan struct{})
+	for i:=0;i<5;i++{
+		//log.Printf("i: %v", i)
+		go func(ctx context.Context, i int) {
+			//log.Printf("run forever loop")
+			for {
+				select {
+				case <-ctx.Done():
+					done <- struct{}{}
+					log.Printf("test context %v done, err: %v",i, ctx.Err())
+					return
+				default:
+					fmt.Println("for loop")
+				}
+				time.Sleep(1000*time.Millisecond)
+				//log.Printf("1000 ms\n")
+			}
+		}(ctx, i)
+	}
+
+	go func() {
+		//log.Printf("sleep for 3 seconds")
+		time.Sleep(3*time.Second)
+		//log.Printf("cancel func")
+		cancelFunc()
+	}()
+	//NOTE: if we want to see the
+	for i:=0;i<5;i++{
+		<-done
+	}
+	time.Sleep(1*time.Second)
+	log.Printf("done here")
+}
+
 func main() {
 	//server := &http.Server{
 	//	Addr:              "localhost:8080",
@@ -33,14 +69,19 @@ func main() {
 	//
 	//server.Shutdown()
 
-	ctx1, cf := context.WithTimeout(context.Background(), 2*time.Second)
-	log.Printf("CTX1")
-	defer cf()
-	log.Printf("done")
-	<-ctx1.Done()
-	log.Printf("abis done")
-
-	ctx, cancelFunc := context.WithTimeout(context.Background(), 1*time.Second)
-	defer cancelFunc()
-	runWithContext(ctx, 10*time.Millisecond)
+	//ctx1, cf := context.WithTimeout(context.Background(), 2*time.Second)
+	//log.Printf("CTX1")
+	//defer cf()
+	//log.Printf("done")
+	//<-ctx1.Done()
+	//log.Printf("abis done")
+	//
+	//ctx, cancelFunc := context.WithTimeout(context.Background(), 1*time.Second)
+	//defer cancelFunc()
+	//runWithContext(ctx, 3*time.Second)
+	ctx2, cancelFunc2 := context.WithCancel(context.Background())
+	defer cancelFunc2()
+	//log.Printf("\n\n\n")
+	//log.Printf("start of test context")
+	testContext(ctx2, cancelFunc2)
 }
