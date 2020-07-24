@@ -18,6 +18,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.7.1
 	github.com/robfig/cron v1.2.0
+	go.uber.org/ratelimit v0.1.0
 	golang.org/x/net v0.0.0-20191027093000-83d349e8ac1a // indirect
 	unit.nginx.org v0.0.0-20200424040856-195fe0a92670
 )
