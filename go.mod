@@ -20,5 +20,6 @@ require (
 	github.com/robfig/cron v1.2.0
 	go.uber.org/ratelimit v0.1.0
 	golang.org/x/net v0.0.0-20191027093000-83d349e8ac1a // indirect
+	golang.org/x/time v0.0.0-20190308202827-9d24e82272b4
 	unit.nginx.org v0.0.0-20200424040856-195fe0a92670
 )

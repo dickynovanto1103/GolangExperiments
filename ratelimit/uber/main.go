@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	rl := ratelimit.New(100) //per second
+	rl := ratelimit.New(10000) //per second
 	prev := time.Now()
 	for i:=0;i<100;i++{
 		now := rl.Take()
