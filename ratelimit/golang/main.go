@@ -3,6 +3,7 @@ package main
 import (
 	"golang.org/x/time/rate"
 	"log"
+	"net"
 	"net/http"
 )
 
@@ -21,6 +22,9 @@ func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request){
 }
 
 func okHandler(w http.ResponseWriter, r *http.Request) {
+	ip, port, err := net.SplitHostPort(r.RemoteAddr)
+	log.Printf("%v %v %v", ip, port, err)
+	log.Printf("r remote address: %v", r.RemoteAddr)
 	w.Write([]byte("im fine"))
 }
 

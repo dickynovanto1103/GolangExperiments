@@ -1,0 +1,21 @@
+package main
+
+import "log"
+
+type person struct {
+	name *string
+	age *int
+}
+
+func NewPerson(name string, age int) *person {
+	return &person{
+		name: &name,
+		age:  &age,
+	}
+}
+
+//use %+v to print the field name --> it will print like this name:<val> age:<val>
+func main() {
+	person := NewPerson("dicky", 12)
+	log.Printf("%+v", person)
+}
