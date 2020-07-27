@@ -18,4 +18,6 @@ func NewPerson(name string, age int) *person {
 func main() {
 	person := NewPerson("dicky", 12)
 	log.Printf("%+v", person)
+	num := 123
+	log.Printf("%+v", num) //there is no difference if we only want to print a native variable
 }
