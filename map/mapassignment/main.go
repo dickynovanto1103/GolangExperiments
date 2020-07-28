@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+)
 
 func change(m map[string]string) {
 	m["dicky"] = "novanto"
@@ -18,6 +21,11 @@ func main() {
 
 	fmt.Println("otherMapper:", otherMapper)
 	fmt.Println("mapper:", mapper)
+
+	resMap := returnMap()
+	for k, v := range resMap {
+		log.Println(k, v)
+	}
 }
 
 func copyMap(mapper map[string]string) map[string]string {
@@ -28,4 +36,10 @@ func copyMap(mapper map[string]string) map[string]string {
 	}
 
 	return otherMap
+}
+
+func returnMap() (res map[int]string) {
+	res = make(map[int]string)
+	res[123] = "dicky"
+	return res
 }

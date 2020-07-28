@@ -46,7 +46,8 @@ func main() {
 	if err != nil {
 		log.Fatal("error in connecting to DB:", err)
 	}
-
+	//db.SetConnMaxLifetime()
+	db.SetMaxOpenConns(100)
 	defer db.Close()
 
 	err = db.Ping()
