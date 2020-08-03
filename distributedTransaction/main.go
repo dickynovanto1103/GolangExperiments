@@ -3,6 +3,8 @@ package main
 import (
 	"context"
 	"github.com/lysu/go-saga"
+	"log"
+	"os"
 	"time"
 )
 
@@ -36,6 +38,9 @@ func main() {
 	sagaId := uint64(2)
 	from, to := "foo", "bar"
 	amount := 100
+
+	logger := log.New(os.Stdout, "saga_test", 1)
+	saga.SetLogger(logger)
 
 	saga.StartSaga(context.Background(), sagaId).
 		ExecSub("deduce", from, amount).
