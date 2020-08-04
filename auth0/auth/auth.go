@@ -33,7 +33,7 @@ func NewAuthenticator() (*Authenticator, error) {
 		ClientID:     "tCyyKW13VytGCsTaOTwBTm1HZ0lOuqH9",
 		ClientSecret: clientSecret,
 		Endpoint:     provider.Endpoint(),
-		RedirectURL:  "http://localhost:3000/callback",
+		RedirectURL:  "http://localhost:8080/callback",
 		Scopes:       []string{oidc.ScopeOpenID, "profile"},
 	}
 	authenticator := &Authenticator{
