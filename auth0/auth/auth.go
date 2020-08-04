@@ -3,6 +3,7 @@ package auth
 import (
 	"context"
 	"log"
+	"os"
 
 	"github.com/coreos/go-oidc"
 	"golang.org/x/oauth2"
@@ -26,9 +27,11 @@ func NewAuthenticator() (*Authenticator, error) {
 		return nil, err
 	}
 
+	clientSecret := os.Getenv("CLIENT_SECRET")
+
 	conf := oauth2.Config{
 		ClientID:     "tCyyKW13VytGCsTaOTwBTm1HZ0lOuqH9",
-		ClientSecret: "CLIENT SECRET", //TODO: use env variable
+		ClientSecret: clientSecret,
 		Endpoint:     provider.Endpoint(),
 		RedirectURL:  "http://localhost:3000/callback",
 		Scopes:       []string{oidc.ScopeOpenID, "profile"},
