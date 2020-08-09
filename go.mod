@@ -11,6 +11,7 @@ require (
 	github.com/cucumber/godog v0.9.0
 	github.com/cucumber/messages-go/v10 v10.0.3
 	github.com/getsentry/sentry-go v0.6.1
+	github.com/go-redis/redis/v8 v8.0.0-beta.7
 	github.com/gogo/protobuf v1.3.1
 	github.com/golang/protobuf v1.4.2
 	github.com/google/btree v1.0.0
