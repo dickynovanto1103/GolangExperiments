@@ -21,3 +21,9 @@ services:
       - "8080:8080"
     depends_on:
       - db
+  transaction-test:
+    build:
+      context: ./transaction
+    depends_on:
+      - db
+

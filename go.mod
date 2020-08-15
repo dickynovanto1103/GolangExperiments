@@ -12,6 +12,7 @@ require (
 	github.com/cucumber/messages-go/v10 v10.0.3
 	github.com/getsentry/sentry-go v0.6.1
 	github.com/go-redis/redis/v8 v8.0.0-beta.7
+	github.com/go-sql-driver/mysql v1.5.0 // indirect
 	github.com/gogo/protobuf v1.3.1
 	github.com/golang/protobuf v1.4.2
 	github.com/google/btree v1.0.0
