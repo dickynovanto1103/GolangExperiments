@@ -4,7 +4,7 @@ import (
 	"log"
 
 	student2 "github.com/dickynovanto1103/GolangExperiments/protobufRedis/student"
-	redis "github.com/go-redis/redis/v7"
+	"github.com/go-redis/redis/v7"
 	"github.com/gogo/protobuf/proto"
 )
 
@@ -51,4 +51,53 @@ func main() {
 	errUnmarshall := proto.Unmarshal([]byte(val), studentBaru)
 	log.Printf("errorUnmarshall: %v", errUnmarshall)
 	log.Printf("val: %+v, err: %v", studentBaru, err)
+
+	//experiment MGet
+	keys := []string{"STUDENT_1", "STUDENT_2"}
+	results, err := client.MGet(keys...).Result()
+	if err != nil {
+		log.Panicf("error in MGet, err: %v", err)
+	}
+
+	for _, res := range results {
+		if res == nil {
+			continue
+		}
+		resString := res.(string)
+
+		val := []byte(resString)
+		student := &student2.Student{}
+		errUnmarshall = proto.Unmarshal(val, student)
+		log.Printf("errUnmarshall: %v", errUnmarshall)
+		log.Printf("student: %+v\n", student)
+	}
+
+	_, err = client.HSet("test", "STUDENT_1", jsonString, "STUDENT_2", jsonString).Result()
+	if err != nil {
+		log.Fatalf("fail to hset, err: %v", err)
+	}
+	mapRes, err := client.HGetAll("test").Result()
+	for key, valString := range mapRes {
+		val := []byte(valString)
+		student := &student2.Student{}
+		errUnmarshall = proto.Unmarshal(val, student)
+		log.Printf("errUnmarshall: %v", errUnmarshall)
+		log.Printf("test key: %v student: %+v\n", key, student)
+	}
+	anotherStudent := &student2.Student{
+		Id:     proto.Int32(12),
+		Name:   nil,
+		IdCard: nil,
+		Books:  nil,
+	}
+	marshalledStudent, _ := proto.Marshal(anotherStudent)
+	_, err = client.HSet("test", "STUDENT_2", marshalledStudent).Result()
+	mapRes, err = client.HGetAll("test").Result()
+	for key, valString := range mapRes {
+		val := []byte(valString)
+		student := &student2.Student{}
+		errUnmarshall = proto.Unmarshal(val, student)
+		log.Printf("errUnmarshall: %v", errUnmarshall)
+		log.Printf("again test key: %v student: %+v\n", key, student)
+	}
 }
