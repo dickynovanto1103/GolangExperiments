@@ -100,4 +100,26 @@ func main() {
 		log.Printf("errUnmarshall: %v", errUnmarshall)
 		log.Printf("again test key: %v student: %+v\n", key, student)
 	}
+	_, err = client.HSet("test1", "STUDENT", marshalledStudent).Result()
+	pipe := client.Pipeline()
+	pipe.HGetAll("test")
+	res2, err := pipe.HGetAll("test1").Result()
+	answer, err := pipe.Exec()
+	if err != nil {
+		log.Fatalf("error in exec, err: %v", err)
+	}
+	for _, ans := range answer {
+		res := ans.(*redis.StringStringMapCmd)
+		log.Printf("res: %+v", res)
+		mapRes, err = res.Result()
+		for key, jawab := range mapRes {
+			log.Printf("key: %v, jawab: %+v", key, jawab)
+			val := []byte(jawab)
+			student := &student2.Student{}
+			errUnmarshall = proto.Unmarshal(val, student)
+			log.Printf("errUnmarshall: %v", errUnmarshall)
+			log.Printf("again again test key: %v student: %+v\n", key, student)
+		}
+	}
+	log.Printf("res1: %+v, res2: %+v answer: %+v", 12, res2, answer)
 }
