@@ -3,12 +3,14 @@ package main
 import (
 	"bytes"
 	"encoding/json"
-	"github.com/dickynovanto1103/GolangExperiments/jsonprotobuf/model"
-	"github.com/dickynovanto1103/GolangExperiments/jsonprotobuf/student"
-	"github.com/gogo/protobuf/jsonpb"
 	"io/ioutil"
 	"log"
 	"reflect"
+
+	"github.com/dickynovanto1103/GolangExperiments/jsonprotobuf/model"
+	"github.com/dickynovanto1103/GolangExperiments/jsonprotobuf/student"
+	"github.com/gogo/protobuf/jsonpb"
+	"github.com/golang/protobuf/proto"
 )
 
 // experiment using jsonpb
@@ -60,6 +62,18 @@ func exp2(file []byte) {
 	log.Println("byteArr marshal result:", string(byteArr))
 }
 
+func exp3() {
+	log.Printf("exp3")
+	var bytes []byte
+
+	unmarshalledStudent := &student.Student{}
+	err := proto.Unmarshal(bytes, unmarshalledStudent)
+	if err != nil {
+		log.Printf("err: %v", err)
+	}
+	log.Printf("unmarshalledStudent: %v %T", unmarshalledStudent, unmarshalledStudent)
+}
+
 func main() {
 	file, err := ioutil.ReadFile("jsonprotobuf/data/data.json")
 	if err != nil {
@@ -67,4 +81,5 @@ func main() {
 	}
 	exp1(file)
 	exp2(file)
+	exp3()
 }
