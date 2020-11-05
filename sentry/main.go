@@ -29,7 +29,8 @@ func cobaPanic(msg string) {
 
 func main() {
 	err := sentry.Init(sentry.ClientOptions{
-		Dsn: "http://1e4058a3ee6f403ab796a8e17f0e355f@localhost:8080/1",
+		Dsn:              "http://1e4058a3ee6f403ab796a8e17f0e355f@localhost:8080/1",
+		AttachStacktrace: true,
 	})
 
 	if err != nil {
