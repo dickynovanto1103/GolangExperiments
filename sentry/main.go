@@ -8,19 +8,23 @@ import (
 )
 
 func experimentSentryRecover() {
-	defer func() {
-		if err := recover(); err != nil {
-			sentry.CurrentHub().Recover(err)
-		} else {
-			log.Printf("received nil err")
-			sentry.CurrentHub().Recover(err)
-		}
+	//just take a look at the sentry.Recover() implementation and we will be able to understand
 
-		log.Printf("done recover")
-	}()
+	//defer func() {
+	//	if err := recover(); err != nil {
+	//		sentry.CurrentHub().Recover(err)
+	//	} else {
+	//		log.Printf("received nil err")
+	//		sentry.CurrentHub().Recover(err)
+	//	}
+	//	sentry.Recover()
+	//
+	//	log.Printf("done recover")
+	//}()
+	defer sentry.Recover()
 
 	log.Printf("test panic")
-	cobaPanic("halo test panic")
+	cobaPanic("halo test panic2")
 }
 
 func cobaPanic(msg string) {
