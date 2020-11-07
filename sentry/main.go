@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"log"
 	"time"
 
@@ -21,10 +22,11 @@ func experimentSentryRecover() {
 	//
 	//	log.Printf("done recover")
 	//}()
-	defer sentry.Recover()
+	ctx := context.WithValue(context.Background(), 2, "test ctx value")
+	defer sentry.RecoverWithContext(ctx)
 
 	log.Printf("test panic")
-	cobaPanic("halo test panic2")
+	cobaPanic("halo test panic3")
 }
 
 func cobaPanic(msg string) {
