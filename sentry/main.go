@@ -34,9 +34,18 @@ func cobaPanic(msg string) {
 }
 
 func main() {
+	sentrySyncTransport := sentry.NewHTTPSyncTransport()
+	sentrySyncTransport.Timeout = 3 * time.Second
 	err := sentry.Init(sentry.ClientOptions{
 		Dsn:              "http://1e4058a3ee6f403ab796a8e17f0e355f@localhost:8080/1",
 		AttachStacktrace: true,
+		Transport:        sentrySyncTransport,
+		BeforeSend: func(event *sentry.Event, hint *sentry.EventHint) *sentry.Event {
+			if hint.Context != nil {
+				log.Printf("hint context value: %+v value: %v hint: %+v", hint.Context, hint.Context.Value(2), hint)
+			}
+			return event
+		},
 	})
 
 	if err != nil {
