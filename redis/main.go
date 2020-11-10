@@ -8,6 +8,15 @@ import (
 	"github.com/go-redis/redis/v8"
 )
 
+func testGetAndSetInteger(redisClient *redis.Client) {
+	_, err := redisClient.Set(context.Background(), "dicky", 10, 10*time.Minute).Result()
+	if err != nil {
+		log.Fatalf("error set in cache, err: %v", err)
+	}
+	num, err := redisClient.Get(context.Background(), "dicky").Result()
+	log.Printf("num: %v type: %T, err: %v", num, num, err)
+}
+
 func main() {
 	option := &redis.Options{
 		Addr: ":6379",
@@ -26,4 +35,5 @@ func main() {
 	_, err = pipe.Exec(context.Background())
 	//time.Sleep(2 * time.Second)
 	log.Printf("err: %v incr val: %v", err, incr.Val())
+	testGetAndSetInteger(rd)
 }
