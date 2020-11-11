@@ -7,10 +7,9 @@ import (
 )
 
 type Student struct {
-	Id int
+	Id   int
 	Name string
 }
-
 
 type TestStruct struct {
 	Mapper map[string]int `json:"testmap"`
@@ -19,6 +18,21 @@ type TestStruct struct {
 func createJSONString(ob interface{}) string {
 	b, _ := json.Marshal(ob)
 	return string(b)
+}
+
+type Member struct {
+	Name    string   `json:"name"`
+	AgeList []uint64 `json:"age_list"`
+}
+
+type Coba struct {
+	Members []*Member `json:"members"`
+}
+
+func testUnmarshallNilValue() {
+	var value *Coba
+	err := json.Unmarshal(nil, value)
+	log.Printf("err: %v value: %v", err, value)
 }
 
 //if we don't set the name of the fields in json format, for example, Id int `json:"id"`, then the fields will just become the original fields name
@@ -47,4 +61,20 @@ func main() {
 	name := "dicky"
 	err = json.NewEncoder(bytes.NewBuffer([]byte(name))).Encode(struct{}{})
 	log.Println("err encode: ", err)
+
+	coba := &Coba{
+		Members: []*Member{
+			{
+				Name:    "dicky",
+				AgeList: []uint64{1, 2, 3},
+			},
+			{
+				Name:    "asdf",
+				AgeList: []uint64{1, 2, 4},
+			},
+		},
+	}
+
+	log.Printf("hasilMarshall: %v", createJSONString(coba))
+	testUnmarshallNilValue()
 }
