@@ -53,7 +53,9 @@ func main() {
 	}
 	log.Printf("no error")
 	experimentSentryRecover()
-
+	sentry.ConfigureScope(func(scope *sentry.Scope) {
+		scope.SetExtra("dinner", "is ready")
+	})
 	//eventId := sentry.CaptureException(errors.New("hello error"))
 	//log.Printf("eventId: %v", *eventId)
 	defer sentry.Flush(5 * time.Second)
