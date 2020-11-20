@@ -13,7 +13,7 @@ func main() {
 	mapper := make(map[string]string)
 	change(mapper)
 	fmt.Println("map: ", mapper)
-	fmt.Println("mapper dari dicky: ",mapper["dicky"])
+	fmt.Println("mapper dari dicky: ", mapper["dicky"])
 
 	otherMapper := copyMap(mapper)
 	fmt.Println(otherMapper)
@@ -25,6 +25,15 @@ func main() {
 	resMap := returnMap()
 	for k, v := range resMap {
 		log.Println(k, v)
+	}
+
+	var cobaMap map[uint64]uint64
+	log.Printf("cobaMap: %v", cobaMap)
+	if cobaMap == nil {
+		log.Printf("coba map nil")
+	}
+	if _, ok := cobaMap[1]; !ok {
+		log.Printf("ga ketemu angka 1")
 	}
 }
 
