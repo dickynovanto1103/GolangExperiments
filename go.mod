@@ -28,6 +28,7 @@ require (
 	github.com/pquerna/cachecontrol v0.0.0-20180517163645-1555304b9b35 // indirect
 	github.com/prometheus/client_golang v1.7.1
 	github.com/robfig/cron v1.2.0
+	github.com/stretchr/testify v1.6.1
 	github.com/valyala/quicktemplate v1.6.0 // indirect
 	go.uber.org/atomic v1.7.0 // indirect
 	go.uber.org/ratelimit v0.1.0

@@ -1,0 +1,12 @@
+syntax="proto2";
+package test;
+
+message PairUint32 {
+    optional uint32 first = 1;
+    optional uint32 second = 2;
+}
+
+message PairInt32 {
+    optional int32 first = 1;
+    optional int32 second = 2;
+}
