@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/petar/GoLLRB/llrb"
 	"log"
+
+	"github.com/petar/GoLLRB/llrb"
 )
 
 type Num struct {
@@ -10,7 +11,7 @@ type Num struct {
 }
 
 func NewNum(num int) *Num {
-	return &Num{num:num}
+	return &Num{num: num}
 }
 
 func (n *Num) Less(than llrb.Item) bool {
@@ -35,7 +36,7 @@ func main() {
 	deleted := tree.Delete(NewNum(3))
 	log.Println("deleted: ", deleted)
 	len := tree.Len()
-	for i:=0;i<len;i++{
+	for i := 0; i < len; i++ {
 		itemMin := tree.Min()
 		itemMax := tree.Max()
 		log.Printf("min %v max %v", itemMin, itemMax)
