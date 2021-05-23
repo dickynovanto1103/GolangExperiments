@@ -2,17 +2,10 @@ package main
 
 import (
 	"log"
-	"os"
 	"testing"
 
 	"github.com/magiconair/properties/assert"
 )
-
-func TestMain(m *testing.M) {
-	log.Printf("before test main")
-	os.Exit(m.Run())
-	log.Printf("done test main")
-}
 
 func TestGroup(t *testing.T) {
 	log.Printf("done1")
@@ -22,4 +15,32 @@ func TestGroup(t *testing.T) {
 func TestGroup2(t *testing.T) {
 	log.Printf("done2")
 	assert.Equal(t, 1, Group())
+}
+
+func TestAdd(t *testing.T) {
+	tests := map[string]struct {
+		a int
+		b int
+
+		expectedSum int
+	}{
+		"negative": {
+			a: -1,
+			b: -2,
+
+			expectedSum: -3,
+		},
+		"positive": {
+			a: 1,
+			b: 2,
+
+			expectedSum: 3,
+		},
+	}
+
+	for testName, test := range tests {
+		t.Run(testName, func(t *testing.T) {
+			assert.Equal(t, test.expectedSum, Add(test.a, test.b))
+		})
+	}
 }

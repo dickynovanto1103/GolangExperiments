@@ -13,6 +13,7 @@ require (
 	github.com/google/btree v1.0.0
 	github.com/google/go-cmp v0.5.4 // indirect
 	github.com/google/uuid v1.1.5
+	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/magiconair/properties v1.8.1
 	github.com/petar/GoLLRB v0.0.0-20190514000832-33fb24c13b99
 	github.com/pkg/errors v0.9.1
