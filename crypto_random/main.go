@@ -13,3 +13,7 @@ func main() {
 	s := base64.StdEncoding.EncodeToString(b)
 	log.Printf("s: %v", s)
 }
+
+func createRandomNumber() {
+	
+}
