@@ -3,7 +3,9 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"io/ioutil"
 	"log"
+	"os"
 )
 
 type Student struct {
@@ -77,4 +79,41 @@ func main() {
 
 	log.Printf("hasilMarshall: %v", createJSONString(coba))
 	testUnmarshallNilValue()
+	tryJsonEncoder()
+	tryJsonDecoder()
+}
+
+func tryJsonEncoder() {
+	log.Printf("trying json encoder")
+	file, err := ioutil.TempFile("./", "dicky_test*.txt")
+	if err != nil {
+		log.Panicf("error in creating temp file, err: %v", err)
+	}
+	encoder := json.NewEncoder(file)
+	student := Student{
+		Id:   12,
+		Name: "dicky",
+	}
+
+	if err := encoder.Encode(student); err != nil {
+		log.Printf("error in encoding, err: %v", err)
+	}
+	os.Rename(file.Name(), "dicky_test.txt")
+	log.Printf("finished encoding")
+}
+
+func tryJsonDecoder() {
+	log.Printf("trying json decoder")
+	file, err := os.Open("dicky_test.txt")
+	if err != nil {
+		log.Panicf("error in opening file, err: %v", err)
+	}
+
+	decoder := json.NewDecoder(file)
+	student := &Student{}
+	if err = decoder.Decode(student); err != nil {
+		log.Panicf("error in decoding, err: %v", err)
+	}
+	log.Printf("student from decoding: %+v", student)
+
 }
