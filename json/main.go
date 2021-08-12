@@ -90,9 +90,15 @@ func tryJsonEncoder() {
 		log.Panicf("error in creating temp file, err: %v", err)
 	}
 	encoder := json.NewEncoder(file)
-	student := Student{
-		Id:   12,
-		Name: "dicky",
+	student := []Student{
+		{
+			Id:   12,
+			Name: "dicky",
+		},
+		{
+			Id:   13,
+			Name: "dicky13",
+		},
 	}
 
 	if err := encoder.Encode(student); err != nil {
@@ -110,10 +116,12 @@ func tryJsonDecoder() {
 	}
 
 	decoder := json.NewDecoder(file)
-	student := &Student{}
-	if err = decoder.Decode(student); err != nil {
+	students := &[]Student{}
+	if err = decoder.Decode(students); err != nil {
 		log.Panicf("error in decoding, err: %v", err)
 	}
-	log.Printf("student from decoding: %+v", student)
-
+	log.Printf("student from decoding: %+v", students)
+	for _, student := range *students {
+		log.Printf("student: %+v", student)
+	}
 }
