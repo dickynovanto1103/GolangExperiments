@@ -11,7 +11,11 @@ func main() {
 	go runTickerUntilDone(ticker, done)
 
 	log.Printf("go routine created")
-	time.Sleep(3 * time.Second)
+	time.Sleep(2 * time.Second)
+
+	log.Printf("change to 100 ms")
+	ticker.Reset(100*time.Millisecond)
+	time.Sleep(2 * time.Second)
 	done <- 1
 }
 
