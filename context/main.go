@@ -60,7 +60,22 @@ func testContext(ctx context.Context, cancelFunc context.CancelFunc) {
 	log.Printf("done here")
 }
 
+func doSomething(ctx context.Context) {
+	log.Printf("do something, ctx value: %v, andre: %v", ctx.Value("dicky"), ctx.Value("andre"))
+}
+
+func experimentWithValue() {
+	ctx := context.Background()
+	ctx = context.WithValue(ctx, "dicky", "ganteng")
+	ctx = context.WithValue(ctx, "dicky", "sekali")
+	ctx = context.WithValue(ctx, "andre", "ganteng jg")
+	context.WithCancel()
+	ctx.Err()
+	doSomething(ctx)
+}
+
 func main() {
+	experimentWithValue()
 	//server := &http.Server{
 	//	Addr:              "localhost:8080",
 	//	ReadTimeout:       time.Duration(1)*time.Second,
@@ -79,9 +94,12 @@ func main() {
 	//ctx, cancelFunc := context.WithTimeout(context.Background(), 1*time.Second)
 	//defer cancelFunc()
 	//runWithContext(ctx, 3*time.Second)
-	ctx2, cancelFunc2 := context.WithCancel(context.Background())
-	defer cancelFunc2()
+
+	// ctx2, cancelFunc2 := context.WithCancel(context.Background())
+	// defer cancelFunc2()
+	
 	//log.Printf("\n\n\n")
 	//log.Printf("start of test context")
-	testContext(ctx2, cancelFunc2)
+	
+	// testContext(ctx2, cancelFunc2)
 }
