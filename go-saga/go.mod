@@ -10,5 +10,5 @@ require (
 	github.com/lysu/kazoo-go v0.0.0-20160229162054-26744d16cdcf // indirect
 	github.com/samuel/go-zookeeper v0.0.0-20200724154423-2164a8ac840e // indirect
 	github.com/stretchr/testify v1.6.1 // indirect
-	golang.org/x/net v0.0.0-20200707034311-ab3426394381 // indirect
+	golang.org/x/net v0.7.0 // indirect
 )
