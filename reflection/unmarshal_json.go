@@ -21,7 +21,8 @@ func UnmarshalJSON(data []byte, v interface{}) {
 
 	for i := 0; i < nonPtrTyp.NumField(); i++ {
 		field := nonPtrTyp.Field(i)
-		fieldNameToValueMap[field.Name] = valueElem.Field(i)
+		jsonTag := field.Tag.Get("json")
+		fieldNameToValueMap[jsonTag] = valueElem.Field(i)
 
 		log.Printf("field: %+v", field)
 	}
@@ -35,13 +36,28 @@ func UnmarshalJSON(data []byte, v interface{}) {
 
 	log.Printf("tempMap: %+v", tempMap)
 
-	for fieldName, val := range fieldNameToValueMap {
-		if _, ok := tempMap[fieldName]; !ok {
+	//for fieldName, val := range fieldNameToValueMap {
+	//	if _, ok := tempMap[fieldName]; !ok {
+	//		continue
+	//	}
+	//
+	//	if val.IsValid() && val.CanSet() {
+	//		val.Set(reflect.ValueOf(tempMap[fieldName]).Convert(val.Type()))
+	//	}
+	//
+	//}
+
+	for key, val := range tempMap {
+		fieldValue, ok := fieldNameToValueMap[key]
+		if !ok {
 			continue
 		}
 
-		if val.IsValid() && val.CanSet() {
-			val.Set(reflect.ValueOf(tempMap[fieldName]).Convert(val.Type()))
+		value := reflect.ValueOf(val)
+		log.Printf("key: %v val: %v, valueType: %v, fieldValue Type: %v", key, val, value.Type(), fieldValue.Type())
+
+		if value.Type().ConvertibleTo(fieldValue.Type()) {
+			fieldValue.Set(value.Convert(fieldValue.Type()))
 		}
 	}
 }
