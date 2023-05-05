@@ -26,6 +26,7 @@ func main() {
 	log.Printf("is valid: %v, can set: %v", valueStr.IsValid(), valueStr.CanSet())
 
 	elemAndSetStringExperiment()
+	nonPointerObjThenTryToSetString()
 }
 
 // note:
@@ -38,15 +39,32 @@ func elemAndSetStringExperiment() {
 	}
 
 	val := reflect.ValueOf(person)
-	val.UnsafePointer()
 	elem := val.Elem()
 	log.Printf("val: %v elem: %v", val, elem)
 
 	nameValue := elem.FieldByName("Name")
-	log.Printf("name value: %v", nameValue)
 	if nameValue.IsValid() && nameValue.CanSet() {
 		nameValue.SetString("angel")
 	}
 
 	log.Printf("person: %+v", person)
+}
+
+// if object is a non pointer object, then the field.CanSet() will return false, and if we
+// try to do field.SetString / SetInt / etc, it will panic
+func nonPointerObjThenTryToSetString() {
+	person := Person{
+		Name: "DICKY",
+		Age:  24,
+	}
+
+	value := reflect.ValueOf(person)
+	log.Printf("value: %+v", value)
+	nameField := value.FieldByName("Name")
+	log.Printf("can set name field: %v", nameField.CanSet())
+	//nameField.SetString("asu") //it will panic
+	person.Name = "dickyyy"
+	log.Printf("person: %+v", person)
+	val := reflect.ValueOf(person)
+	log.Printf("val: %+v", val)
 }
