@@ -10,7 +10,8 @@ func main() {
 	//ScanLnInputInteger()
 	//ScanLnInput2Integers()
 	//ScanInputInteger()
-	ScanInput2Integers()
+	//ScanInput2Integers()
+	trySscanOfName()
 }
 
 // Scanln will read input until \n
@@ -76,4 +77,16 @@ func ScanInput2Integers() {
 	}
 	fmt.Printf("n: %v\n", n)
 	fmt.Printf("sum: %v", a+b)
+}
+
+func trySscanOfName() {
+	var firstName, lastName string
+	str := "john doe"
+	n, err := fmt.Sscan(str, &firstName, &lastName)
+	if err != nil {
+		log.Panicf("error in scanning, err: %v", err)
+	}
+
+	fmt.Printf("n: %v\n", n)
+	fmt.Printf("firstname: %v lastName: %v", firstName, lastName)
 }
