@@ -12,5 +12,14 @@ func experimentEqualFold() {
 }
 
 func main() {
-	experimentEqualFold()
+	//experimentEqualFold()
+	experimentStringsCount()
+}
+
+func experimentStringsCount() {
+	a := "aaaaaa"
+	log.Printf("%v", strings.Count(a, "aa"))
+	strings.Index()
+	strings.Fields()
+	strings.IndexAny()
 }
