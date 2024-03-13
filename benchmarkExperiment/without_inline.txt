@@ -1,0 +1,2 @@
+PASS
+ok  	github.com/dickynovanto1103/GolangExperiments/benchmarkExperiment	0.209s
